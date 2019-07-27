@@ -113,10 +113,10 @@ function purchasePrompt() {
       var totalCost = res[0].price * purchaseQuantity;
       var remainingStock =  res[0].stock_quantity - purchaseQuantity;
 
-      console.log("Good news suffiencent quantity in stock!");
-      console.log("Your total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!");
+      console.log("\nGood news suffiencent quantity in stock!\n");
+      console.log("\nYour total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
 
-      console.log("Updating " + res[0].product_name + " quantities...\n");
+      console.log("\nUpdating " + res[0].product_name + " quantities...\n");
       var query = connection.query(
         "UPDATE products SET ? WHERE ?",
         [
@@ -130,7 +130,6 @@ function purchasePrompt() {
         function(err, res) {
 
           if (err) throw err;
-          // console.log(res.affectedRows + " products updated!\n");
 
         }
         
@@ -139,48 +138,48 @@ function purchasePrompt() {
 
     } else {
 
-      console.log("Insufficient stock on hand to complete your " + res[0].product_name + " purchase request.");
+      console.log("\nInsufficient stock on hand to complete your " + res[0].product_name + " purchase request.\n");
 
     };
 
-    connection.end();
+    // connection.end();
+    anotherPurchasePrompt() 
 
   });
 };
 
 
-// function anotherPurchasePrompt() {
-//   inquirer
-//     .prompt([
+function anotherPurchasePrompt() {
+  inquirer
+    .prompt([
 
-//       {
-//         type: "input",
-//         message: "Do you wish to make another purchase?",
-//         name: "continue"
-//       },
-//       {
-//         type: "confirm",
-//         message: "Please confirm: ",
-//         name: "confirm"
-//       }
+      // {
+      //   type: "input",
+      //   message: "Do you wish to make another purchase?",
+      //   name: "continue"
+      // },
+      {
+        type: "confirm",
+        message: "Do you wish to make another purchase? ",
+        name: "confirm"
+      }
 
-//     ])
+    ])
 
-//     .then(function(answers) {
-//       console.log("dog " + answers.continue);
+    .then(function(answers) {
 
-//       if (answers === "y") {
+      if (answers.confirm === true) {
 
-//         displayProduct();
+        displayProduct();
         
-//       }
+      }
 
-//       else {
+      else {
 
-//         console.log("\nThat's okay come again\n");
-//         connection.end();
+        console.log("\nThat's okay come again\n");
+        connection.end();
 
-//       }
-//     });
+      }
+    });
 
-//  }
+ }
