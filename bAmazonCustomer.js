@@ -111,10 +111,31 @@ function purchasePrompt() {
     if (purchaseQuantity <= res[0].stock_quantity){
 
       var totalCost = res[0].price * purchaseQuantity;
-      // var remainingStock =  res[0].stock_quantity - purchaseQuantity;
+      var remainingStock =  res[0].stock_quantity - purchaseQuantity;
 
       console.log("Good news suffiencent quantity in stock!");
       console.log("Your total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!");
+
+      console.log("Updating " + res[0].product_name + " quantities...\n");
+      var query = connection.query(
+        "UPDATE products SET ? WHERE ?",
+        [
+          {
+            stock_quantity: remainingStock
+          },
+          {
+            id: purchaseID
+          }
+        ],
+        function(err, res) {
+
+          if (err) throw err;
+          // console.log(res.affectedRows + " products updated!\n");
+
+        }
+        
+      );
+
 
     } else {
 
@@ -122,27 +143,7 @@ function purchasePrompt() {
 
     };
 
-    // console.log("Updating " + res[0].product_name + " quantities...\n");
-    // var query = connection.query(
-    //   "UPDATE products SET ? WHERE ?",
-    //   [
-    //     {
-    //       stock_quantity: remainingStock
-    //     },
-    //     {
-    //       id: purchaseID
-    //     }
-    //   ],
-    //   function(err, res) {
-
-    //     if (err) throw err;
-    //     // console.log(res.affectedRows + " products updated!\n");
-
-    //   }
-      
-    // );
-
-        connection.end();
+    connection.end();
 
   });
 };

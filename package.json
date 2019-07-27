@@ -1,0 +1,24 @@
+{
+  "name": "bamazonapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bAmazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickmoroney17/bAmazonApp.git"
+  },
+  "author": "Patrick Moroney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patrickmoroney17/bAmazonApp/issues"
+  },
+  "homepage": "https://github.com/patrickmoroney17/bAmazonApp#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "inquirer": "^6.5.0",
+    "mysql": "^2.17.1"
+  }
+}
