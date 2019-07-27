@@ -4,14 +4,8 @@ var Table = require("cli-table");
 
 var connection = mysql.createConnection({
   host: "localhost",
-
-  // Your port; if not 3306
   port: 3306,
-
-  // Your username
   user: "root",
-
-  // Your password
   password: "password",
   database: "bAmazonDB"
 });
@@ -19,11 +13,8 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId + "\n");
-  // addProduct();
   displayProduct();
 });
-
-//////////
 
 
 // function addProduct() {
@@ -142,7 +133,6 @@ function purchasePrompt() {
 
     };
 
-    // connection.end();
     anotherPurchasePrompt() 
 
   });
@@ -153,11 +143,6 @@ function anotherPurchasePrompt() {
   inquirer
     .prompt([
 
-      // {
-      //   type: "input",
-      //   message: "Do you wish to make another purchase?",
-      //   name: "continue"
-      // },
       {
         type: "confirm",
         message: "Do you wish to make another purchase? ",
