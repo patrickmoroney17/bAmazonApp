@@ -18,19 +18,19 @@ connection.connect(function(err) {
   displayProduct();
 });
 
-
 function displayProduct() {
-  console.log("Selecting all products...\n");
-  connection.query(
-    
-    "SELECT * FROM products", function(err, res) {
 
-    if (err) throw err;
+  connection.query(
+
+    "SELECT * FROM products", 
+    
+    function(err, res) {
+      if (err) throw err;
 
     var table = new Table ({
-			head: ["Item ID", "Product Name", "Price", "Quantity"],
-			colWidths: [15,25,15,15]
-		});
+      head: ["Item ID", "Product Name", "Price", "Quantity"],
+      colWidths: [15,25,15,15]
+    });
 
     for (i = 0; i < res.length; i++) {
       table.push(
@@ -40,8 +40,8 @@ function displayProduct() {
         res[i].stock_quantity]
       );
     }
-    console.log(table.toString());
 
+    console.log(table.toString());
     purchasePrompt();
 
   });
@@ -70,7 +70,7 @@ function purchasePrompt() {
       var IDrequested = answers.desiredID;
       var quantityRequested = answers.desiredQuantity;
 
-      purchaseOrder(IDrequested, quantityRequested);
+    purchaseOrder(IDrequested, quantityRequested);
       
     });
  };
@@ -79,45 +79,49 @@ function purchasePrompt() {
 
   connection.query(
 
-    "Select * FROM products WHERE id = " + purchaseID, function(err,res){
-
-    if (err){console.log(err)};
-
-    if (purchaseQuantity <= res[0].stock_quantity){
-
-      var totalCost = res[0].price * purchaseQuantity;
-      var remainingStock =  res[0].stock_quantity - purchaseQuantity;
-
-      console.log("\nGood news suffiencent quantity in stock!\n");
-      console.log("\nYour total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
-
-      console.log("\nUpdating " + res[0].product_name + " quantities...\n");
-
-      connection.query(
-
-        "UPDATE products SET ? WHERE ?",
-        [
-          {
-            stock_quantity: remainingStock
-          },
-          {
-            id: purchaseID
-          }
-        ],
-        function(err, res) {
-
-          if (err) throw err;
-
+    "Select * FROM products WHERE ?",
+      [
+        {
+          id: purchaseID
         }
-        
-      );
+      ],
 
+    function(err, res) {
+      if (err) throw err;
 
-    } else {
+      if (purchaseQuantity <= res[0].stock_quantity) {
 
-      console.log("\nInsufficient stock on hand to complete your " + res[0].product_name + " purchase request.\n");
+        var totalCost = res[0].price * purchaseQuantity;
+        var remainingStock =  res[0].stock_quantity - purchaseQuantity;
 
-    };
+        console.log("\nGood news suffiencent quantity in stock!\n");
+        console.log("\nYour total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
+
+        console.log("\nUpdating " + res[0].product_name + " quantities...\n");
+
+        connection.query(
+
+          "UPDATE products SET ? WHERE ?",
+            [
+              {
+                stock_quantity: remainingStock
+              },
+              {
+                id: purchaseID
+              }
+            ],
+          
+          function(err, res) {
+            if (err) throw err;
+          }
+          
+        );
+
+      } else {
+
+        console.log("\nInsufficient stock on hand to complete your " + res[0].product_name + " purchase request.\n");
+
+      };
 
     anotherPurchasePrompt() 
 
