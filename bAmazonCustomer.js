@@ -21,7 +21,10 @@ connection.connect(function(err) {
 
 function displayProduct() {
   console.log("Selecting all products...\n");
-  connection.query("SELECT * FROM products", function(err, res) {
+  connection.query(
+    
+    "SELECT * FROM products", function(err, res) {
+
     if (err) throw err;
 
     var table = new Table ({
@@ -74,7 +77,9 @@ function purchasePrompt() {
 
  function purchaseOrder(purchaseID, purchaseQuantity) {
 
-  connection.query("Select * FROM products WHERE id = " + purchaseID, function(err,res){
+  connection.query(
+
+    "Select * FROM products WHERE id = " + purchaseID, function(err,res){
 
     if (err){console.log(err)};
 
@@ -87,7 +92,9 @@ function purchasePrompt() {
       console.log("\nYour total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
 
       console.log("\nUpdating " + res[0].product_name + " quantities...\n");
-      var query = connection.query(
+
+      connection.query(
+
         "UPDATE products SET ? WHERE ?",
         [
           {
