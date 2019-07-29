@@ -1,43 +1,22 @@
-var mysql = require("mysql");
-var inquirer = require("inquirer");
-var Table = require("cli-table");
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const Table = require("cli-table");
 
-var connection = mysql.createConnection({
+const dbConnectSettings = {
   host: "localhost",
   port: 3306,
   user: "root",
   password: "password",
   database: "bAmazonDB"
-});
+};
+
+const connection = mysql.createConnection(dbConnectSettings);
 
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId + "\n");
   displayProduct();
 });
-
-
-// function addProduct() {
-//   console.log("Inserting a new product...\n");
-//   var query = connection.query(
-//     "INSERT INTO products SET ?",
-//     {
-//       product_name: "Laptop Bag",
-//       department_name: "Computer Accessories",
-//       price: 19.99,
-//       stock_quantity: 50
-//     },
-//     function(err, res) {
-//       if (err) throw err;
-//       console.log(res.affectedRows + " product inserted!\n");
-//       // Call updateProduct AFTER the INSERT completes
-//       updateProduct();
-//     }
-//   );
-
-//   // logs the actual query being run
-//   console.log(query.sql);
-// }
 
 
 function displayProduct() {
