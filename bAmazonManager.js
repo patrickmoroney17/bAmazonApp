@@ -46,11 +46,11 @@ function managerInterfacePrompt() {
           break;
         
         case "Add to Inventory":
-          addToInventory();
+          addToInventoryPrompt();
           break;
         
         case "Add New Product":
-          addNewProduct();
+          addNewProductPrompt();
           break;
         }
       
@@ -115,6 +115,81 @@ function displayLowInventory() {
   });
 
 }
+
+function addNewProductPrompt() {
+
+  inquirer
+    .prompt([
+
+      {
+        type: "input",
+        message: "What department do you want to add a product?",
+        name: "addProductDepartment"
+      },
+      
+      {
+        type: "input",
+        message: "What product do you want to add?",
+        name: "addProduct"
+      },
+
+      {
+        type: "input",
+        message: "What price should be charged?",
+        name: "addProductPrice"
+      },
+
+      {
+        type: "input",
+        message: "How many should be added to inventory?",
+        name: "addProductInvenotry"
+      }
+
+    ])
+
+    .then(
+
+      function(answers){
+
+        var productName = answers.addProduct;
+        var departmentName = answers.addProductDepartment
+        var price = answers.addProductPrice;
+        var stockQuantity = answers.addProductInvenotry;
+
+        addNewProduct(productName, departmentName, price, stockQuantity); 
+      });
+    };
+  
+    function addNewProduct(name, department, priceAdd, quantityadd) {
+
+      connection.query(
+
+        "INSERT INTO products SET ? "
+
+        [
+          {
+            product_name: name
+          },
+          {
+            department_name: department
+          },
+          {
+            price: priceAdd
+          },
+          {
+            stock_quantity: quantityadd
+          }
+        ],
+
+        function(err, res) {
+          if (err) throw err;
+        }
+
+      ); 
+
+    displayProduct();
+
+    };
 
 
 
@@ -195,26 +270,6 @@ function displayLowInventory() {
 //  }
 
 
- // function addProduct() {
-//   console.log("Inserting a new product...\n");
-//   var query = connection.query(
-//     "INSERT INTO products SET ?",
-//     {
-//       product_name: "Laptop Bag",
-//       department_name: "Computer Accessories",
-//       price: 19.99,
-//       stock_quantity: 50
-//     },
-//     function(err, res) {
-//       if (err) throw err;
-//       console.log(res.affectedRows + " product inserted!\n");
-//       // Call updateProduct AFTER the INSERT completes
-//       updateProduct();
-//     }
-//   );
 
-//   // logs the actual query being run
-//   console.log(query.sql);
-// }
 
 
