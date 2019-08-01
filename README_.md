@@ -183,11 +183,14 @@ That's okay come again
 patrickmoroneys-MacBook-Pro:bAmazonApp patrickmoroney$ 
 
 ### Technologies Used
-
+- Javascript
+- Node.js
 - MySql database
 - NPM - MySql
 - NPM - inquirer
 - NPM - cli-table
+- Git
+- Github
 
 
 
