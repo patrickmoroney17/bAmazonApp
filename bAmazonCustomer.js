@@ -94,7 +94,7 @@ function purchasePrompt() {
         let totalCost = res[0].price * purchaseQuantity;
         let remainingStock =  res[0].stock_quantity - purchaseQuantity;
 
-        console.log("\nGood news suffiencent quantity in stock!\n");
+        console.log("\nGood news sufficient quantity in stock!\n");
         console.log("\nYour total cost for " + purchaseQuantity + " " + res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
 
         console.log("\nUpdating " + res[0].product_name + " quantities...\n");
