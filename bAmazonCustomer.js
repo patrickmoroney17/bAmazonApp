@@ -27,7 +27,7 @@ function displayProduct() {
     function(err, res) {
       if (err) throw err;
 
-    var table = new Table ({
+    let table = new Table ({
       head: ["Item ID", "Product Name", "Price", "Quantity"],
       colWidths: [15,25,15,15]
     });
@@ -67,8 +67,8 @@ function purchasePrompt() {
 
     .then(function(answers) {
 
-      var IDrequested = answers.desiredID;
-      var quantityRequested = answers.desiredQuantity;
+      let IDrequested = answers.desiredID;
+      let quantityRequested = answers.desiredQuantity;
 
     purchaseOrder(IDrequested, quantityRequested);
       
@@ -91,11 +91,11 @@ function purchasePrompt() {
 
       if (purchaseQuantity <= res[0].stock_quantity) {
 
-        var totalCost = res[0].price * purchaseQuantity;
-        var remainingStock =  res[0].stock_quantity - purchaseQuantity;
+        let totalCost = res[0].price * purchaseQuantity;
+        let remainingStock =  res[0].stock_quantity - purchaseQuantity;
 
         console.log("\nGood news suffiencent quantity in stock!\n");
-        console.log("\nYour total cost for " + purchaseQuantity + " " +res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
+        console.log("\nYour total cost for " + purchaseQuantity + " " + res[0].product_name + " is " + totalCost + ".  We'll ship that out to you pronto!!\n");
 
         console.log("\nUpdating " + res[0].product_name + " quantities...\n");
 
